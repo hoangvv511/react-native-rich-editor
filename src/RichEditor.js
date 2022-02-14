@@ -383,7 +383,7 @@ export default class RichTextEditor extends Component {
     }
 
     insertMention({title, id}) {
-        this.sendAction(actions.insertMention, 'result', {title, url});
+        this.sendAction(actions.insertMention, 'result', {title, id});
     }
 
     insertLink(title, url) {
