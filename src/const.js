@@ -43,6 +43,7 @@ export const actions = {
     hiliteColor: 'hiliteColor',
     blockquote: 'quote',
     keyboard: 'keyboard',
+    endCaret: 'endCaret',
     setTitlePlaceholder: 'SET_TITLE_PLACEHOLDER',
     setContentPlaceholder: 'SET_CONTENT_PLACEHOLDER',
     setTitleFocusHandler: 'SET_TITLE_FOCUS_HANDLER',
