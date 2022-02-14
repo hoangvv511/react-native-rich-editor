@@ -210,6 +210,8 @@ function createHTML(options = {}) {
                 originalRange.collapse(true);
                 sel.createRange().pasteHTML(html);
             }
+            var contentHtml = Actions.content.getHtml();
+            postAction({type: 'CONTENT_CHANGE', data: contentHtml});
         }
 
         function checkboxNode(node){
