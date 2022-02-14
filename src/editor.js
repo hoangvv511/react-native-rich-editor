@@ -166,6 +166,13 @@ function createHTML(options = {}) {
             selection.collapseToEnd();
         }
 
+        function moveCaretToEnd(){
+            // select all the content in the element
+            document.execCommand('selectAll', false, null);
+            // collapse selection to the end
+            document.getSelection().collapseToEnd();
+        }
+
         function insertMentionBox({title,id}){
             var mentionHtml = '<span id="mention" class="sn-mention-name" data-mention-id='+id+' contenteditable="false">'+title+'</span>&nbsp;';
             var rootMentionHtml = '<div><span id="mention" class="sn-mention-name" data-mention-id='+id+' contenteditable="false">'+title+'</span>&nbsp;</div>';
@@ -370,14 +377,15 @@ function createHTML(options = {}) {
             fontName: { result: function(name) { return exec('fontName', name); }},
             link: {
                 result: function(data) {
-                    data = data || {};
-                    var title = data.title;
-                    title = title || window.getSelection().toString();
-                    // title = title || window.prompt('Enter the link title');
-                    var url = data.url || window.prompt('Enter the link URL');
-                    if (url){
-                        exec('insertHTML', "<a href='"+ url +"'>"+(title || url)+"</a>");
-                    }
+                    moveCaretToEnd()
+                    // data = data || {};
+                    // var title = data.title;
+                    // title = title || window.getSelection().toString();
+                    // // title = title || window.prompt('Enter the link title');
+                    // var url = data.url || window.prompt('Enter the link URL');
+                    // if (url){
+                    //     exec('insertHTML', "<a href='"+ url +"'>"+(title || url)+"</a>");
+                    // }
                 }
             },
             image: {
