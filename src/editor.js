@@ -167,8 +167,8 @@ function createHTML(options = {}) {
         }
 
         function insertMentionBox({title,id}){
-            var mentionHtml = '<span id="mention" class="sn-mention-name" data-mention-id='+id+' contenteditable="false">'+title+'</span>';
-            var rootMentionHtml = '<div><span id="mention" class="sn-mention-name" data-mention-id='+id+' contenteditable="false">'+title+'</span></div>';
+            var mentionHtml = '<span id="mention" class="sn-mention-name" data-mention-id='+id+' contenteditable="false">'+title+'</span>&nbsp;';
+            var rootMentionHtml = '<div><span id="mention" class="sn-mention-name" data-mention-id='+id+' contenteditable="false">'+title+'</span>&nbsp;</div>';
             if (window.getSelection) {
                 // IE9 and non-IE
                 sel = window.getSelection();
