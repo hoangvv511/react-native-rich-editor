@@ -1,8 +1,6 @@
 export const actions = {
     content: 'content',
-
     updateHeight: 'UPDATE_HEIGHT',
-
     setBold: 'bold',
     setItalic: 'italic',
     setUnderline: 'underline',
@@ -27,6 +25,7 @@ export const actions = {
     insertHTML: 'html',
     insertImage: 'image',
     insertVideo: 'video',
+    insertMention: "mention",
     fontSize: 'fontSize',
     fontName: 'fontName',
     setSubscript: 'subscript',
