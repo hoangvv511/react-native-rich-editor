@@ -54,6 +54,26 @@ function createHTML(options = {}) {
         body { overflow-y: hidden; -webkit-overflow-scrolling: touch;background-color: ${backgroundColor};caret-color: ${caretColor};}
         .content {font-family: Arial, Helvetica, sans-serif;color: ${color}; width: 100%;${!useContainer ? 'height:100%;' : ''}-webkit-overflow-scrolling: touch;padding-left: 0;padding-right: 0;}
         .pell { height: 100%;} .pell-content { outline: 0; overflow-y: auto;padding: 10px;height: 100%;${contentCSSText}}
+        .sn-mention-name {
+            box-sizing: border-box;
+            margin: 0 2px 0 0;
+            padding: 3px 7px;
+            color: #000000d9;
+            font-size: 1em;
+            font-variant: tabular-nums;
+            list-style: none;
+            font-feature-settings: 'tnum';
+            height: auto;
+        
+            white-space: nowrap;
+            line-height: 1.714;
+        
+            background: #fafafa;
+            border: 1px solid #d9d9d9;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        }
     </style>
     <style>
         [placeholder]:empty:before { content: attr(placeholder); color: ${placeholderColor};}
@@ -144,6 +164,52 @@ function createHTML(options = {}) {
             var selection = window.getSelection();
             selection.selectAllChildren(node);
             selection.collapseToEnd();
+        }
+
+        function insertMentionBox({title,id}){
+            var mentionHtml = "<span id="mention" class="sn-mention-name" data-mention-id='"+id+"' contenteditable="false">"+title+"</span>";
+            var rootMentionHtml = '<div><span id="mention" class="sn-mention-name" data-mention-id='"+id+"' contenteditable="false">"+title+"</span></div>';
+            if (window.getSelection) {
+                // IE9 and non-IE
+                sel = window.getSelection();
+
+                if (sel.getRangeAt && sel.rangeCount) {
+                    range = sel.getRangeAt(0);
+                    range.deleteContents();
+        
+                    // Range.createContextualFragment() would be useful here but is
+                    // only relatively recently standardized and is not supported in
+                    // some browsers (IE9, for one)
+                    var el = document.createElement("div");
+                    var rootHtml = Actions.content.getHtml();
+                    if(!rootHtml.length) {
+                        el.innerHTML = rootMentionHtml;
+                    } else {
+                        el.innerHTML = mentionHtml;
+                    }
+                    var frag = document.createDocumentFragment(), node, lastNode;
+                    while ( (node = el.firstChild) ) {
+                        lastNode = frag.appendChild(node);
+                    }
+                    var firstNode = frag.firstChild;
+                    range.insertNode(frag);
+                    
+                    // Preserve the selection
+                    if (lastNode) {
+                        range = range.cloneRange();
+                        range.setStartAfter(lastNode);
+                        range.collapse(true);
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+                    }
+                }
+            }
+            else if ( (sel = document.selection) && sel.type != "Control") {
+                // IE < 9
+                var originalRange = sel.createRange();
+                originalRange.collapse(true);
+                sel.createRange().pasteHTML(html);
+            }
         }
 
         function checkboxNode(node){
@@ -325,6 +391,13 @@ function createHTML(options = {}) {
                     if (html){
                         exec('insertHTML', html);
                         Actions.UPDATE_HEIGHT();
+                    }
+                }
+            },
+            mention: {
+                result: function ({title, id}){
+                    if (title){
+                        insertMentionBox({title, id});
                     }
                 }
             },
