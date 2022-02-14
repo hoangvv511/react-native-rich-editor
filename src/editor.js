@@ -412,10 +412,10 @@ function createHTML(options = {}) {
                 }
             },
             endCaret: {
-                result: function (){
+                result: function () {
                     moveCaretToEnd()
                 }
-            }
+            },
             text: { result: function (text){ text && exec('insertText', text); }},
             video: {
                 result: function(url, style) {
