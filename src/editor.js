@@ -183,7 +183,7 @@ function createHTML(options = {}) {
                     var el = document.createElement("div");
                     var rootHtml = Actions.content.getHtml();
                     if(!rootHtml.length) {
-                        el.innerHTML = mentionHtml;
+                        el.innerHTML = rootMentionHtml;
                     } else {
                         el.innerHTML = mentionHtml;
                     }
