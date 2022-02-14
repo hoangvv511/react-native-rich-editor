@@ -167,8 +167,8 @@ function createHTML(options = {}) {
         }
 
         function insertMentionBox({title,id}){
-            var mentionHtml = "<span id="mention" class="sn-mention-name" data-mention-id='"+id+"' contenteditable="false">"+title+"</span>";
-            var rootMentionHtml = '<div><span id="mention" class="sn-mention-name" data-mention-id='"+id+"' contenteditable="false">"+title+"</span></div>';
+            var mentionHtml = '<span id="mention" class="sn-mention-name" data-mention-id='+id+' contenteditable="false">'+title+'</span>';
+            var rootMentionHtml = '<div><span id="mention" class="sn-mention-name" data-mention-id='+id+' contenteditable="false">'+title+'</span></div>';
             if (window.getSelection) {
                 // IE9 and non-IE
                 sel = window.getSelection();
@@ -183,7 +183,7 @@ function createHTML(options = {}) {
                     var el = document.createElement("div");
                     var rootHtml = Actions.content.getHtml();
                     if(!rootHtml.length) {
-                        el.innerHTML = rootMentionHtml;
+                        el.innerHTML = mentionHtml;
                     } else {
                         el.innerHTML = mentionHtml;
                     }
