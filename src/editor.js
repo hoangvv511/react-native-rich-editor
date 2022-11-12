@@ -523,7 +523,7 @@ function createHTML(options = {}) {
             content.id = 'content';
             content.contentEditable = true;
             content.spellcheck = false;
-            content.autofocus = true;
+            content.autofocus = false;
             content.enterKeyHint = '${enterKeyHint}';
             content.autocapitalize = '${autoCapitalize}';
             content.autocorrect = ${autoCorrect};
@@ -586,9 +586,10 @@ function createHTML(options = {}) {
             }
 
             function postKeyAction(event, type){
-                postAction({type: type, data: {keyCode: event.keyCode, key: event.key}});
+                postAction({type: type, data: {keyCode: event.keyCode, key: event.key, code: event.code}});
             }
             function handleKeyup(event){
+                console.log("key event", event)
                 enterStatus = 0;
                 _keyDown = false;
                 if (event.keyCode === 8) handleSelecting (event);
